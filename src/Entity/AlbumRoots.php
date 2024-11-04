@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AlbumRootsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,26 +16,26 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'AlbumRoots')]
 final class AlbumRoots
 {
-	#[ORM\Column]
+	#[ORM\Column(name: 'id', type: null)]
 	#[ORM\Id]
 	public int $id;
 
-	#[ORM\Column]
+	#[ORM\Column(name: 'label', type: null)]
 	public string $label;
 
-	#[ORM\Column]
+	#[ORM\Column(name: 'status', type: null)]
 	public int $status;
 
-	#[ORM\Column]
+	#[ORM\Column(name: 'type', type: null)]
 	public int $type;
 
-	#[ORM\Column]
+	#[ORM\Column(name: 'identifier', type: null)]
 	public string $identifier;
 
-	#[ORM\Column]
+	#[ORM\Column(name: 'specificPath', type: null)]
 	public string $specificPath;
 
-	#[ORM\Column]
+	#[ORM\Column(name: 'caseSensitivity', type: null)]
 	public int $caseSensitivity;
 
 
