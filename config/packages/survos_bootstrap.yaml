@@ -1,0 +1,22 @@
+survos_bootstrap:
+  routes:
+      login: app_login
+      logout: app_logout
+      register: app_register
+      homepage: app_homepage
+  menu_options:
+      frontPage: false
+      showAppMenu: false
+
+
+  app:
+    code: dkam
+    abbr: <b>digi</b>Kam
+  options:
+    # consider https://startbootstrap.com/previews/simple-sidebar as another theme
+    theme: tabler
+    allow_login: false
+    offcanvas: end
+
+
+#survos_velzon:
