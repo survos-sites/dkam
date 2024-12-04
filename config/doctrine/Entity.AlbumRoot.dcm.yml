@@ -1,0 +1,5 @@
+# my custom configuration, doctrine/config/Entity.AlbumRoot.dcm.yml
+id:
+  type: int
+  identity: true
+

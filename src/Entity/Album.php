@@ -20,8 +20,8 @@ final class Album
 	#[ORM\Id]
 	public int $id;
 
-	#[ORM\Column(name: 'albumRoot', type: null)]
-	public int $albumRoot;
+	#[ORM\Column(name: 'albumRoot', type: 'App\Entity\Album')]
+	public Album $albumRoot;
 
 	#[ORM\Column(name: 'relativePath', type: null)]
 	public string $relativePath;
@@ -40,20 +40,4 @@ final class Album
 
 	#[ORM\Column(name: 'modificationDate', type: 'datetime_immutable')]
 	public ?\DateTimeInterface $modificationDate;
-
-    #[ORM\ManyToOne(inversedBy: 'albums')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?AlbumRoot $root = null;
-
-    public function getRoot(): ?AlbumRoot
-    {
-        return $this->root;
-    }
-
-    public function setRoot(?AlbumRoot $root): static
-    {
-        $this->root = $root;
-
-        return $this;
-    }
 }
