@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\AlbumRoots;
-use App\Entity\Albums;
-use App\Repository\AlbumRootsRepository;
+use App\Entity\Album;
+use App\Entity\AlbumRoot;
+use App\Repository\AlbumRepository;
 use App\Service\SqliteConverterService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
@@ -33,17 +34,35 @@ class AppController extends AbstractController
     ): Response
     {
         $data = [];
-        /** @var ServiceEntityRepositoryInterface $repo */
+        /** @var ServiceEntityRepositoryInterface|AlbumRepository $repo */
+//        foreach ($repos as $repo) {
         foreach ($repos as $repo) {
-//            $repo = $this->entityManager->getRepository($class = );
-            $entity = $repo->findBy([], limit: 1)[0]??null;
-            $data[$repo->getClassName()] = $entity;
+            if (!in_array($repo->getClassName(), [Album::class, AlbumRoot::class])) {
+//                continue;
+            }
+            try {
+                $entity = $repo->findBy([], limit: 1)[0]??null;
+                $data[$repo->getClassName()] = $entity;
+            } catch (\Exception $e) {
+                dd($e, $repo->getClassName());
+            }
         }
+        dd($data);
 
         return $this->render('app/index.html.twig', [
             'data' => $data,
         ]);
     }
+
+    #[Route('/albums', name: 'app_albums')]
+    #[Template("dk/albumRoots.html.twig")]
+    public function albumRoots(): array
+    {
+        return [
+            'albumRoots' => $this->entityManager->getRepository(AlbumRoot::class)->findBy([], limit: 30)
+        ];
+    }
+
 
     #[Route('/rebuild', name: 'app_rebuild')]
     public function rebuild(): Response
@@ -52,10 +71,8 @@ class AppController extends AbstractController
         $filename = $this->projectDir . '/schema.sql';
         assert(file_exists($filename), "$filename not found");
         $this->sqliteConverterService->parseSql($filename);
+        return $this->redirectToRoute('app_homepage');
 
-        return $this->render('app/index.html.twig', [
-            'controller_name' => 'AppController',
-        ]);
     }
 
 

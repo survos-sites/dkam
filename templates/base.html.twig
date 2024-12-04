@@ -19,13 +19,7 @@
     {% endblock %}
 
 {% block page_header %}
-
-
-    <button id="install" class="btn btn-primary" >
-        {{ ux_icon('tabler:download') }}
-        Install
-    </button>
-
+    {{ _self }}
     {#    {{ app.request.get('_route') }}#}
     {#            :preTitle="app.request.get('_route')"#}
     {#            :title="app.request._route|trans(domain=routes)"#}

@@ -28,6 +28,7 @@ CREATE TABLE Images
                     uniqueHash TEXT,
                     manualOrder INTEGER,
                     UNIQUE (album, name));
+-- This is a one-to-one
 CREATE TABLE ImageInformation
                     (imageid INTEGER PRIMARY KEY,
                     rating INTEGER,
@@ -79,6 +80,7 @@ CREATE TABLE ImagePositions
                     roll REAL,
                     accuracy REAL,
                     description TEXT);
+-- This is a many-to-one
 CREATE TABLE ImageComments
                     (id INTEGER PRIMARY KEY,
                     imageid INTEGER,

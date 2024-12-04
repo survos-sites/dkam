@@ -20,8 +20,7 @@ final class Album
 	#[ORM\Id]
 	public int $id;
 
-	#[ORM\Column(name: 'albumRoot', type: 'App\Entity\Album')]
-	public Album $albumRoot;
+	public $albumRoot;
 
 	#[ORM\Column(name: 'relativePath', type: null)]
 	public string $relativePath;
